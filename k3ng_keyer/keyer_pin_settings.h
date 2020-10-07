@@ -21,10 +21,12 @@
 #define tx_key_dit 0            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 #define tx_key_dah 0            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 
-#ifdef FEATURE_COMMAND_BUTTONS
+#define potentiometer_enable_pin 0  // if defined, the potentiometer will be enabled only when this pin is held low; set to 0 to ignore this pin
+
+#ifdef FEATURE_BUTTONS
   #define analog_buttons_pin A1
   #define command_mode_active_led 0
-#endif //FEATURE_COMMAND_BUTTONS
+#endif //FEATURE_BUTTONS
 
 /*
 FEATURE_SIDETONE_SWITCH
@@ -39,14 +41,21 @@ FEATURE_SIDETONE_SWITCH
 
 
 //lcd pins
-#ifdef FEATURE_LCD_4BIT
+#if defined(FEATURE_LCD_4BIT) || defined(FEATURE_LCD_8BIT)
   #define lcd_rs A2
-  #define lcd_enable 10
+  #define lcd_enable 10  // pin 10 is used by Ethernet shield and will conflict with that
   #define lcd_d4 6
   #define lcd_d5 7
   #define lcd_d6 8
   #define lcd_d7 9
-#endif //FEATURE_LCD_4BIT
+#endif //FEATURE_LCD_4BIT || defined(FEATURE_LCD_8BIT)
+
+#if defined(FEATURE_LCD_8BIT) // addition four data lines for 8 bit LCD control
+  #define lcd_d0 20
+  #define lcd_d1 21
+  #define lcd_d2 22
+  #define lcd_d3 23
+#endif //FEATURE_LCD_4BIT || defined(FEATURE_LCD_8BIT)
 
 #ifdef FEATURE_LCD1602_N07DH
   #define lcd_rs 8
@@ -77,10 +86,8 @@ FEATURE_SIDETONE_SWITCH
   #define led_ring_le     A8 //4    //Latch
 #endif //FEATURE_LED_RING
 
-#ifdef FEATURE_ALPHABET_SEND_PRACTICE
-  #define correct_answer_led 0
-  #define wrong_answer_led 0
-#endif //FEATURE_ALPHABET_SEND_PRACTICE
+#define correct_answer_led 0
+#define wrong_answer_led 0
 
 #ifdef FEATURE_PTT_INTERLOCK
   #define ptt_interlock 0  // this pin disables PTT and TX KEY
@@ -90,14 +97,11 @@ FEATURE_SIDETONE_SWITCH
   #define pin_straight_key 52
 #endif //FEATURE_STRAIGHT_KEY
 
-#ifdef FEATURE_CW_DECODER
-  #define cw_decoder_pin A3//A11 //A5 //A3  
-  #ifdef OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
-    #define cw_decoder_audio_input_pin 0 // this must be an analog pin!
-  #endif //OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
-  #define cw_decoder_indicator 24
-#endif //FEATURE_CW_DECODER
-
+// FEATURE_CW_DECODER & OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
+// See https://github.com/k3ng/k3ng_cw_keyer/wiki/385-Feature:-CW-Decoder for details
+#define cw_decoder_pin 0             // This is for use with external decoding hardware
+#define cw_decoder_audio_input_pin 0 // This is for audio detection decoding using OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR; this must be an analog pin!
+#define cw_decoder_indicator 0       // Output - goes HIGH when cw tone is detected by OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
 
 #if defined(FEATURE_COMPETITION_COMPRESSION_DETECTION)
   #define compression_detection_pin 13
@@ -131,6 +135,19 @@ FEATURE_SIDETONE_SWITCH
   #define Col1 35
   #define Col0 34
 #endif
+
+#ifdef FEATURE_SEQUENCER
+  #define sequencer_1_pin 0
+  #define sequencer_2_pin 0
+  #define sequencer_3_pin 0
+  #define sequencer_4_pin 0
+  #define sequencer_5_pin 0
+#endif //FEATURE_SEQUENCER
+
+#define ptt_input_pin 0
+
+#define tx_inhibit_pin 0
+#define tx_pause_pin 0   
 
 #else
 

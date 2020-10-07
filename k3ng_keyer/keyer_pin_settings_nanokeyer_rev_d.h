@@ -29,6 +29,8 @@
 #define tx_key_dit 0            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 #define tx_key_dah 0            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 
+#define potentiometer_enable_pin 0  // if defined, the potentiometer will be enabled only when this pin is held low; set to 0 to ignore this pin
+
 #if defined(FEATURE_SLEEP)
   #define keyer_awake 13       // Goes active when keyer is awake, inactive when in sleep mode; change active and inactive states in keyer_settings file
 #endif
@@ -47,6 +49,19 @@ FEATURE_SIDETONE_SWITCH
 #ifdef FEATURE_SIDETONE_SWITCH
   #define SIDETONE_SWITCH 8
 #endif //FEATURE_SIDETONE_SWITCH
+
+#ifdef FEATURE_SEQUENCER
+  #define sequencer_1_pin 0
+  #define sequencer_2_pin 0
+  #define sequencer_3_pin 0
+  #define sequencer_4_pin 0
+  #define sequencer_5_pin 0
+#endif //FEATURE_SEQUENCER
+
+#define ptt_input_pin 0
+
+#define tx_inhibit_pin 0
+#define tx_pause_pin 0   
 
 #else
 
